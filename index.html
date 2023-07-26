@@ -93,7 +93,7 @@ function initROP(init)
 		if((j2===jump_2)&&(j1===jump_1)&&(x===xtra_data)&&(sf===stack_frame))
 		{
 			if(t_out!==0){clearTimeout(t_out);}
-			showResult(hr+"<h1><b><font color=%22386E38%22>XierraCFW initialized!</font></b></h1><h3><b><font color=%22000000%22><span style='color:#000000;'>You now can Install XierraCFW Packages.</span></b></h3>");
+			showResult(hr+"<h1><b><font color=%22386E38%22>XierraCFW initialized!</font></b></h1><h3><b><font color=%22000000%22><span style='color:#00ff9d;'>You now can Install XierraCFW Packages.</span></b></h3>");
 			enable_trigger();
 		}
 		else
@@ -109,7 +109,7 @@ function initROP(init)
 	catch(e)
 	{
 		debug=true;
-		logAdd(br+"An erro occured:"+br+e+" at : "+e.lineNumber);
+		logAdd(br+"An error occured:"+br+e+" at : "+e.lineNumber);
 		debug=false;
 	}
 }
@@ -117,7 +117,7 @@ function initROP(init)
 function triggerX()
 {
 		clearLogEntry();
-		showResult(hr+"<h2><b><span style='color:#000000;'>Installing XierraCFW...</span></b></h2>");
+		showResult(hr+"<h2><b><span style='color:#00ff9d;'>Installing XierraCFW...</span></b></h2>");
 		disable_all();
 		setTimeout(trigger,1000,jump_1_addr);
 		setTimeout(rop_exit_hen,5000,hr+"<h1><b><font color=%22386E38%22>XierraCFW is successfully installed</font></b></h1>","<h1><b><font color='red'>XierraCFW Failed to Patch, Please Restart PS3!</font></b></h1>");
@@ -132,8 +132,8 @@ function triggerX()
 	<h3>Only Support 4.90 HFW | XierraCFW-Based Latest PS3HEN</h3>
 	<span style="color:#0055AA"><h3>NOTE: If XierraCFW is already Installed, this will act as an Enabler.</font></h3><br>
 	<hr></div>
-	<p><button id="btnROP" type="button" onclick="initROP(true);" autofocus>Initialize HEN installer</button> | Auto-Close Browser <input type="checkbox" id="auto_close" name="aclose" checked="checked" onclick="autoclose();"/><span id="dex_txt" style="visibility:hidden"> | DEX mode<input type="checkbox" id="dex" name="DEX" disabled="" onclick="dex();"/> * If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!</span></p>
-	<p><button id="btnTrigger" disabled="" type="button" onclick="triggerX();">Install HEN</button><span id="reset" style="visibility:hidden"> | <button id="btnReset" type="button" onclick="disable_trigger();">Reset</button></span></p>
+	<p><button id="btnROP" type="button" onclick="initROP(true);" autofocus>Initialize XierraCFW</button> | Auto-Close Browser <input type="checkbox" id="auto_close" name="aclose" checked="checked" onclick="autoclose();"/><span id="dex_txt" style="visibility:hidden"> | DEX mode<input type="checkbox" id="dex" name="DEX" disabled="" onclick="dex();"/> * If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!</span></p>
+	<p><button id="btnTrigger" disabled="" type="button" onclick="triggerX();">Install XierraCFW</button><span id="reset" style="visibility:hidden"> | <button id="btnReset" type="button" onclick="disable_trigger();">Reset</button></span></p>
 	<div id="result" style="color:#CC2010"></div><br>
 	<div id="log"></div>
 	<div id="exploit" ></div>
