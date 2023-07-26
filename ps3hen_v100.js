@@ -141,9 +141,9 @@ var gadget_mod14_addr=0;
 var gadget_mod15_addr=0;
 var gadget_mod16_addr=0;
 var xtra_data;var stack_frame;var jump_2;var jump_1;var xtra_data_addr;var stack_frame_addr;var jump_2_addr;var jump_1_addr;
-var fail_msg_frag=hr+"<h1><b>Exploit Initialization FAILED!</h1><h2><span style='color:#000000;'><a href=\"javascript:window.location.reload();\">Refresh this page</a> & try again...</span></b></h2>";
-var progress_msg_frag1=hr+"<h1><b>Exploit Initialization..."+br+"<span style='color:#000000;'>Progress: ";
-var progress_msg_frag2='%, please wait...</span></b></h1>';
+var fail_msg_frag=hr+"<h1><b>XierraCFW Initialization FAILED!</h1><h2><span style='color:#ffffff;'><a href=\"javascript:window.location.reload();\">Refresh</a> and try again</span></b></h2>";
+var progress_msg_frag1=hr+"<h1><b>XierraCFW Initialization..."+br+"<span style='color:#ffffff;'>Progress: ";
+var progress_msg_frag2='%</span></b></h1>';
 
 
 //CEX 4.80
@@ -847,7 +847,7 @@ function clearResultEntry()
 }
 function writeEnvInfo()
 {
-	setInnerHTML(document.getElementById('footer'),hr+"<h3>PS3 System Browser Info:</h3>"+navigator.userAgent+br+navigator.appName+" (" + navigator.platform + ")"+br+new Date().toTimeString() + br);
+	setInnerHTML(document.getElementById('footer'),hr+"<h3></h3>"+new Date().toTimeString() + br);
 }
 
 String.prototype.setCharAt = function(index,chr)
@@ -2521,7 +2521,7 @@ function fill_by_16bytes(nbytes,hex_val)
 //########################## End ROP Framework functions by bguerville(under development) #########################
 function ps3chk(){
 
-	var fwCompat = ["4.00","4.10","4.11","4.20","4.21","4.25","4.30","4.31","4.40","4.41","4.45","4.46","4.50","4.53","4.55","4.60","4.65","4.66","4.70","4.75","4.76","4.78","4.80","4.81","4.82","4.83","4.84","4.85","4.86","4.87","4.88","4.89","4.90"];
+	var fwCompat = ["4.90"];
 	var ua = navigator.userAgent;
 	var uaStringCheck = ua.substring(ua.indexOf("5.0 (") + 5, ua.indexOf(") Apple") - 7);
 	var fwVersion = ua.substring(ua.indexOf("5.0 (") + 19, ua.indexOf(") Apple"));
@@ -2597,14 +2597,14 @@ function ps3chk(){
 					break;					
 					
 				default:
-					alert('Your PS3 is not on FW 4.80 - 4.90! Your current running FW version is ' + fwVersion + ', which is not compatible with PS3HEN. All features have been disabled');
+					alert('Your PS3 is not on 4.90! Your current running FW version is ' + fwVersion + ', which is not compatible with PS3HEN. All features have been disabled');
 					disable_all();
 					break;
 			}
 			break;
 		
 		default:
-			alert('You are not on a PlayStation System! All features have been disabled');
+			alert('ALL FEATURES DISABLED BECAUSE YOU RE NOT IN PLAYSTATION 3 SYSTEM!');
 			disable_all();
 			break;
 	}
