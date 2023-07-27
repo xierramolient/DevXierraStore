@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="ps3hen_v100.js"></script>
+<meta charset="UTF-8"> 
+<title>XierraCFW 4.90 Installer - UNLOCKED</title>
+<script>
+function downloadhen()
+{
+	window.location.href = 'http://dev.xierra.store/build/hen/' + fwVersion + '/PS3HEN.p3t';
+}
+function downloadhenD()
+{
+	window.location.href = 'http://dev.xierra.store/build/hen/' + fwVersion + '/PS3HEN.p3t';
+}
+
+function initROP(init)
+{
+	try
+	{
+		if(init===true){frame_fails=0;search_base_off=0;search_size_ext=0;}
+		if(t_out!==0){clearTimeout(t_out);t_out=0;}
+		offset_array=[];
+		disable_all();
+		clearLogEntry();
+		xtra_data_addr=0;
+		stack_frame_addr=0;
+		jump_2_addr=0;
+		jump_1_addr=0;
+		var usb_fp_addr=0, index_key_addr=0;
+		var search_max_threshold=70*0x100000; // 70Mb maximum memory search
+		var search_base=0x80100000;//0x80190000;//
+		var search_size=2*mbytes;
+		search_size_ext=0*mbytes;
+		search_base_off=0*mbytes;
+		total_loops++;
+		
+		xtra_data=start_x.convert()+usb_sp.convert()
+		+index_key.convert(true)
+		+unescape("\uFD7E");
+		while(xtra_data_addr===0)
+		{
+			if(search_max_threshold<search_size){load_check();return;}
+			xtra_data=xtra_data.replaceAt(0,hexh2bin(0x7EFD));
+			xtra_data_addr=findJsVariableOffset("xtra_data",xtra_data,search_base,search_size);
+			search_max_threshold-=search_size;
+		}
+		
+		
+		usb_fp_addr=xtra_data_addr+start_x.convertedSize()-0x4;
+		index_key_addr=usb_fp_addr+usb_sp.convertedSize();
+		//############################ Building stack frame ###############################################################
+		stack_frame=stack_frame_hookup()
+		+store_word(0x89FFFF00,hen_installer_bytes)
+		+store_word(0x8a000004,sp_exit)
+		+store_word(0x8a000014,gadget_mod8_addr)
+		+syscall(sc_fs_open,usb_fp_addr,fs_flag_readonly,0x8e000000,0,0,0,0,0)
+		+syscall_r3r5_p2p(sc_fs_read,0x8e000000,0x8a000000,0x110000,0x8e000008,0,0,0,0,0,0)
+		+syscall_r3_p2p(sc_fs_close,0x8e000000,0,0,0,0,0,0,0,0,0)
+		+stack_frame_swap(0x8a000000)
+		+stack_frame_exit();
+//############################ End stack frame ###############################################################		
+		while(stack_frame_addr===0)
+		{
+			if(search_max_threshold<search_size+search_size_ext){frame_fails++;if((frame_fails%10)===0){search_base_off+=0;search_size_ext+=0;}load_check();return;}
+			stack_frame=stack_frame.replaceAt(0,hexh2bin(0x2A2F));
+			stack_frame_addr=findJsVariableOffset("stack_frame",stack_frame,search_base+search_base_off,search_size+search_size_ext);
+			if(stack_frame_addr==-1)if(search_max_threshold<search_size+search_size_ext){frame_fails++;load_check();return;}
+			search_max_threshold-=search_size+search_size_ext;
+		}
+		jump_2=unescape("\u0102\u7EFB")+fill_by_16bytes(0x30,0x8282)+hexw2bin(stack_frame_addr)+unescape("\uFB7E");		
+		while(jump_2_addr===0)
+		{
+			if(search_max_threshold<search_size){load_check();return;}
+			jump_2=jump_2.replaceAt(0,hexh2bin(0x7EFB));
+			jump_2_addr=findJsVariableOffset("jump_2",jump_2,search_base,search_size);
+			if(jump_2_addr==-1)if(search_max_threshold<search_size){load_check();return;}
+			search_max_threshold-=search_size;
+		}
+		jump_1=unescape("\u4141\u7EFA")+hexw2bin(jump_2_addr)+unescape("\uFA7E");
+		while(jump_1_addr===0)
+		{
+			if(search_max_threshold<search_size){load_check();return;}
+			jump_1=jump_1.replaceAt(0,hexh2bin(0x7EFA));
+			jump_1_addr=findJsVariableOffset("jump_1",jump_1,search_base,search_size);
+			if(jump_1_addr==-1)if(search_max_threshold<search_size){load_check();return;}
+			search_max_threshold-=search_size;
+		}
+		var sf=checkMemory(stack_frame_addr-0x4,0x8000,stack_frame.length);
+		var x=checkMemory(xtra_data_addr-0x4,0x1000,xtra_data.length);
+		var j2=checkMemory(jump_2_addr-0x4,0x1000,jump_2.length);
+		var j1=checkMemory(jump_1_addr-0x4,0x1000,jump_1.length);
+		if((j2===jump_2)&&(j1===jump_1)&&(x===xtra_data)&&(sf===stack_frame))
+		{
+			if(t_out!==0){clearTimeout(t_out);}
+			showResult(hr+"<h1><b><font color=%22386E38%22>XierraCFW initialized!</font></b></h1><h3><b><font color=%22000000%22><span style='color:#00ff9d;'>You now can Install XierraCFW Packages.</span></b></h3>");
+			enable_trigger();
+		}
+		else
+		{
+			if(x!==xtra_data)logAdd("xtra_data mismatch in memory!");
+			if(sf!==stack_frame)logAdd("stack_frame mismatch in memory!");
+			if(j2!==jump_2)logAdd("jump_2 mismatch in memory!");
+			if(j1!==jump_1)logAdd("jump_1 mismatch in memory!");
+			//logAdd("String mismatch in memory!");
+			load_check();
+		}
+	}
+	catch(e)
+	{
+		debug=true;
+		logAdd(br+"An error occured:"+br+e+" at : "+e.lineNumber);
+		debug=false;
+	}
+}
+
+function triggerX()
+{
+		clearLogEntry();
+		showResult(hr+"<h2><b><span style='color:#00ff9d;'>Installing XierraCFW...</span></b></h2>");
+		disable_all();
+		setTimeout(trigger,1000,jump_1_addr);
+		setTimeout(rop_exit_hen,5000,hr+"<h1><b><font color=%22386E38%22>XierraCFW is successfully installed</font></b></h1>","<h1><b><font color='red'>XierraCFW Failed to Patch, Please Restart PS3!</font></b></h1>");
+		cleanGUI();
+}
+</script>
+</head>
+	<body id="bodyId" style="background-color:#1e293b" onload="javascript:downloadhen()">
+	<div id="headerId" style="color:#FFFFFF">
+	<h1>XierraCFW Installer</h1>
+	<span style="color:#ffffff">Version: 1.2 Unlocked (FREE)<br><br>Rules and Notes to Install XierraCFW 1.2 Unlocked :<br>1.Install XierraCFW 1.2 Only for HFW 4.90!<br>2.Clear WebCache if The Initialization was Failed.<br>3.Enable Auto-Close Browser before Installing!<br><br>How to Install XierraCFW :<br>1.Click on "Initialize XierraCFW" and wait until it says "XierraCFW Initialized"<br>2.Click on "Install XierraCFW"<br>3.Wait until the Package named "XierraCFW.pkg" installed and automatically reboots your PS3.<br>4.Go to "Enable HEN" and wait until it closed.<br>5.Go to Network > "Setup"<br>6.Install the package files and Reboot your PS3 After the PKG is Installed.<br><br><br></br><span><hr>
+	<h3>Only Support 4.90 HFW | XierraCFW-Based Latest PS3HEN</h3>
+	<span style="color:#0055AA"><h3>NOTE: If XierraCFW is already Installed, this will act as an Enabler.</font></h3><br>
+	<hr></div>
+	<p><button id="btnROP" type="button" onclick="initROP(true);" autofocus>Initialize XierraCFW</button> | Auto-Close Browser <input type="checkbox" id="auto_close" name="aclose" checked="checked" onclick="autoclose();"/><span id="dex_txt" style="visibility:hidden"> | DEX mode<input type="checkbox" id="dex" name="DEX" disabled="" onclick="dex();"/> * If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!</span></p>
+	<p><button id="btnTrigger" disabled="" type="button" onclick="triggerX();">Install XierraCFW</button><span id="reset" style="visibility:hidden"> | <button id="btnReset" type="button" onclick="disable_trigger();">Reset</button></span></p>
+	<div id="result" style="color:#CC2010"></div><br>
+	<div id="log"></div>
+	<div id="exploit" ></div>
+	<div id="trigger"></div>
+	<div id="footer"></div>
+	<script>
+		writeEnvInfo();
+		ps3chk();
+	</script>
+	</body>
+</html>
