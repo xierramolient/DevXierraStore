@@ -94,7 +94,10 @@ function initROP(init)
 		{
 			if(t_out!==0){clearTimeout(t_out);}
 			showResult(hr+"<h1><b><font color=%22386E38%22>XierraCFW initialized!</font></b></h1><h3><b><font color=%22000000%22><span style='color:#00ff9d;'>You now can Install XierraCFW Packages.</span></b></h3>");
-			enable_trigger();
+			//enable_trigger();
+			setTimeout(function () {
+			  triggerX();
+			}, 3000);
 		}
 		else
 		{
