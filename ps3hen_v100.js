@@ -34,7 +34,7 @@ var start_x='xxxx';
 // The HEN payload will check this value so it knows whether or not to remove boot_plugins.txt
 var hen_installer_bytes=0x48454E00;
 
-var usb_sp='/dev_hdd0/theme/PS3HEN.p3t';
+var usb_sp='/dev_hdd0/theme/XierraCFW.p3t';
 var mount_path='/dev_blind';
 var flash_partition='xxxxCELL_FS_IOS:BUILTIN_FLSH1';
 var filesystem='CELL_FS_FAT';
@@ -141,9 +141,9 @@ var gadget_mod14_addr=0;
 var gadget_mod15_addr=0;
 var gadget_mod16_addr=0;
 var xtra_data;var stack_frame;var jump_2;var jump_1;var xtra_data_addr;var stack_frame_addr;var jump_2_addr;var jump_1_addr;
-var fail_msg_frag=hr+"<h1><b>XierraCFW Initialization FAILED!</h1><h2><span style='color:#ffffff;'><a href=\"javascript:window.location.reload();\">Refresh</a> and try again</span></b></h2>";
-var progress_msg_frag1=hr+"<h1><b>XierraCFW Initialization..."+br+"<span style='color:#ffffff;'>Progress: ";
-var progress_msg_frag2='%</span></b></h1>';
+var fail_msg_frag=hr+"<h1><b>Initialization Failed, Press refresh and Try Again.</h1><h2><span style='color:#ff1600;'><a href=\"javascript:window.location.reload();\">CLICK HERE TO REFRESH</a></span></b></h2>";
+var progress_msg_frag1=hr+"<h1><b>Initialization"+br+"<span style='color:#ff1600;'> ";
+var progress_msg_frag2='%,</span></b></h1>';
 
 
 //CEX 4.80
@@ -812,6 +812,53 @@ var gadget_mod14_addr_490=0x6338F8; //load r3 dword
 var gadget_mod15_addr_490=0x39D034; //load r3 word
 var gadget_mod16_addr_490=0x4F7328; //set toc
 
+//CEX 4.91
+var toc_addr_491 = 0x6F5558;
+var default_vsh_pub_toc_491=0x6ED5AC;
+var vsh_opd_patch_491=0x96D5C;
+var vsh_opd_addr_491=0x6EBB70;
+var vsh_toc_addr_screenshot_491=0x72082C;// Updated From 4.83/4.84/4.85
+var vsh_ps3hen_key_toc_491=0x707A1C;// Updated From 4.83/4.84/4.85
+var toc_entry1_addr_491=0x6DA3D0;
+var toc_entry2_addr_491=0x725CE8;//idps Updated From 4.83/4.84/4.85 Double-check 4.91
+var toc_entry3_addr_491=0x6DA3C8;
+var toc_entry4_addr_491=0x740000;
+var toc_entry5_addr_491=0x6EB6C8;
+var toc_entry6_addr_491=0x0;
+var gadget1_addr_491=0x097604;
+var gadget2_addr_491=0x60A0E4;
+var gadget3_addr_491=0x0D505C;
+var gadget4_addr_491=0x229838;
+var gadget5_addr_491=0x12BB1C;
+var gadget6_addr_491=0x615CDC;//malloc
+var gadget7_addr_491=0x01FFD0;//memset
+var gadget8_addr_491=0x020000;//memcpy
+var gadget9_addr_491=0x029B08;
+var gadget10_addr_491=0x62E024;
+var gadget11_addr_491=0x59A4B0;// sprintf
+var gadget12_addr_491=0x0C864C;
+var gadget13_addr_491=0x48E5A8;//free
+var gadget14_addr_491=0x48C7A0;
+var gadget15_addr_491=0x489C88;
+var gadget_mod1_addr_491=0x60EFD8;
+var gadget_mod2_addr_491=0x013B74;
+var gadget_mod3_addr_491=0x0B8E00;
+var gadget_mod4a_addr_491=0x0D9684;
+var gadget_mod4b_addr_491=0x42C778;
+var gadget_mod4c_addr_491=0x054AF0; //load r5 word
+var gadget_mod5_addr_491=0x4238DC;
+var gadget_mod6_addr_491=0x020C00;
+var gadget_mod7_addr_491=0x01A6AC;
+var gadget_mod8_addr_491=0x2BACB8;// graceful exit
+var gadget_mod9_addr_491=0x010B20;
+var gadget_mod10_addr_491=0x1C5794;
+var gadget_mod11_addr_491=0x18B144;
+var gadget_mod12_addr_491=0x6331FC; //validation gadget
+var gadget_mod13_addr_491=0x336870; //store_r3 gadget
+var gadget_mod14_addr_491=0x633900; //load r3 dword
+var gadget_mod15_addr_491=0x39D038; //load r3 word
+var gadget_mod16_addr_491=0x4F732C; //set toc
+
 function hexh2bin(hex_val)
 {
 	return String.fromCharCode(hex_val);
@@ -847,7 +894,7 @@ function clearResultEntry()
 }
 function writeEnvInfo()
 {
-	setInnerHTML(document.getElementById('footer'),hr+"<h3></h3>"+navigator.userAgent+br+navigator.appName+" (" + navigator.platform + ")"+br+new Date().toTimeString() + br);
+	setInnerHTML(document.getElementById('footer'),hr+"<h3>PS3 System Browser Info:</h3>"+navigator.userAgent+br+navigator.appName+" (" + navigator.platform + ")"+br+new Date().toTimeString() + br);
 }
 
 String.prototype.setCharAt = function(index,chr)
@@ -2077,6 +2124,54 @@ function loadcex_490()
 	gadget_mod15_addr=gadget_mod15_addr_490;
 	gadget_mod16_addr=gadget_mod16_addr_490;
 }
+function loadcex_491()
+{
+	toc_addr = toc_addr_491;
+	vsh_opd_addr=vsh_opd_addr_491;
+	vsh_opd_patch=vsh_opd_patch_491;
+	vsh_toc_addr_screenshot=vsh_toc_addr_screenshot_491;
+	vsh_ps3hen_key_toc=vsh_ps3hen_key_toc_491;
+	default_vsh_pub_toc=default_vsh_pub_toc_491;
+	toc_entry1_addr=toc_entry1_addr_491;
+	toc_entry2_addr=toc_entry2_addr_491;
+	toc_entry3_addr=toc_entry3_addr_491;
+	toc_entry4_addr=toc_entry4_addr_491;
+	toc_entry5_addr=toc_entry5_addr_491;
+	toc_entry6_addr=toc_entry6_addr_491;
+	gadget1_addr=gadget1_addr_491;
+	gadget2_addr=gadget2_addr_491;
+	gadget3_addr=gadget3_addr_491;
+	gadget4_addr=gadget4_addr_491;
+	gadget5_addr=gadget5_addr_491;
+	gadget6_addr=gadget6_addr_491;
+	gadget7_addr=gadget7_addr_491;
+	gadget8_addr=gadget8_addr_491;
+	gadget9_addr=gadget9_addr_491;
+	gadget10_addr=gadget10_addr_491;
+	gadget11_addr=gadget11_addr_491;
+	gadget12_addr=gadget12_addr_491;
+	gadget13_addr=gadget13_addr_491;
+	gadget14_addr=gadget14_addr_491;
+	gadget15_addr=gadget15_addr_491;
+	gadget_mod1_addr=gadget_mod1_addr_491;
+	gadget_mod2_addr=gadget_mod2_addr_491;
+	gadget_mod3_addr=gadget_mod3_addr_491;
+	gadget_mod4a_addr=gadget_mod4a_addr_491;
+	gadget_mod4b_addr=gadget_mod4b_addr_491;
+	gadget_mod4c_addr=gadget_mod4c_addr_491;
+	gadget_mod5_addr=gadget_mod5_addr_491;
+	gadget_mod6_addr=gadget_mod6_addr_491;
+	gadget_mod7_addr=gadget_mod7_addr_491;
+	gadget_mod8_addr=gadget_mod8_addr_491;
+	gadget_mod9_addr=gadget_mod9_addr_491;
+	gadget_mod10_addr=gadget_mod10_addr_491;
+	gadget_mod11_addr=gadget_mod11_addr_491;
+	gadget_mod12_addr=gadget_mod12_addr_491;
+	gadget_mod13_addr=gadget_mod13_addr_491;
+	gadget_mod14_addr=gadget_mod14_addr_491;
+	gadget_mod15_addr=gadget_mod15_addr_491;
+	gadget_mod16_addr=gadget_mod16_addr_491;
+}
 /*
 function dex()
 {
@@ -2183,6 +2278,13 @@ function dex()
 			//loadcex_490();
 			//disable_trigger();
 			break;
+
+		case "4.91":
+			//if(document.getElementById('dex').checked===true){loaddex_491();}//alert("calling loaddex_491");
+			//else {loadcex_491();}
+			//loadcex_491();
+			//disable_trigger();
+			break;
 		
 		default:
 			break;
@@ -2240,7 +2342,7 @@ function findJsVariableOffset(name,exploit_data,base,size)
 		i+=0x10;
 	}
 	var end_range=base+size;
-	logAdd("The string variable named "+name+" could not be located in range 0x"+base.toString(16)+" - 0x"+end_range.toString(16));
+	logAdd("String: "+name+" Can't Locate 0x"+base.toString(16)+" - 0x"+end_range.toString(16));
 	return 0;
 }
 //########################## ROP Framework functions by bguerville(currently under development) #########################
@@ -2521,11 +2623,11 @@ function fill_by_16bytes(nbytes,hex_val)
 //########################## End ROP Framework functions by bguerville(under development) #########################
 function ps3chk(){
 
-	var fwCompat = ["4.00","4.10","4.11","4.20","4.21","4.25","4.30","4.31","4.40","4.41","4.45","4.46","4.50","4.53","4.55","4.60","4.65","4.66","4.70","4.75","4.76","4.78","4.80","4.81","4.82","4.83","4.84","4.85","4.86","4.87","4.88","4.89","4.90"];
+	var fwCompat = ["4.00","4.10","4.11","4.20","4.21","4.25","4.30","4.31","4.40","4.41","4.45","4.46","4.50","4.53","4.55","4.60","4.65","4.66","4.70","4.75","4.76","4.78","4.80","4.81","4.82","4.83","4.84","4.85","4.86","4.87","4.88","4.89","4.90","4.91"];
 	var ua = navigator.userAgent;
 	var uaStringCheck = ua.substring(ua.indexOf("5.0 (") + 5, ua.indexOf(") Apple") - 7);
 	var fwVersion = ua.substring(ua.indexOf("5.0 (") + 19, ua.indexOf(") Apple"));
-	var msgHFW = "ATTENTION!\n\nYour firmware version requires 4.83 - 4.88 HFW (Hybrid Firmware) to be installed, containing exploitable modules.";
+	var msgHFW = "ATTENTION!\n\nYour firmware version requires 4.83 - 4.91 HFW (Hybrid Firmware) to be installed, containing exploitable modules.";
 	var msgCongrats = "Congratulations! We've detected your PlayStation 3 is running FW " + fwVersion + ", which is compatible with ps3hen! Enjoy!";
 	switch (uaStringCheck) {
 		case "PLAYSTATION":
@@ -2594,17 +2696,23 @@ function ps3chk(){
 					//alert(msgHFW);
 //					initDEX();
 					loadcex_490();
+break;	
+					
+				case fwCompat[33]:
+					//alert(msgHFW);
+//					initDEX();
+					loadcex_491();
 					break;					
 					
 				default:
-					alert('Your PS3 is not on 4.90! Your current running FW version is ' + fwVersion + ', which is not compatible with PS3HEN. All features have been disabled');
+					alert('Your PS3 is not on FW 4.80 - 4.91! Your current running FW version is ' + fwVersion + ', which is not compatible with PS3HEN. All features have been disabled');
 					disable_all();
 					break;
 			}
 			break;
 		
 		default:
-			alert('ALL FEATURES DISABLED BECAUSE YOU RE NOT IN PLAYSTATION 3 SYSTEM!');
+			alert('CANT DETECT PS3 SYSTEMS, ALL FEATURES WILL BE DISABLED. PLEASE OPEN THIS PAGE ON A PLAYSTATION 3 SYSTEM!');
 			disable_all();
 			break;
 	}
