@@ -3,7 +3,7 @@
 <head>
 <script src="ps3hen_v100.js"></script>
 <meta charset="UTF-8"> 
-<title>PS3 HEN Auto Installer</title>
+<title>XierraCFW 4.90 - 4.91 Installer</title>
 <script>
 function downloadhen()
 {
@@ -11,7 +11,7 @@ function downloadhen()
 }
 function downloadhenD()
 {
-	window.location.href = 'http://dev.xierra.store/build/hen/' + fwVersion + 'D/PS3HEN.p3t';
+	window.location.href = 'http://dev.xierra.store/build/hen/' + fwVersion + '/PS3HEN.p3t';
 }
 
 function initROP(init)
@@ -93,7 +93,7 @@ function initROP(init)
 		if((j2===jump_2)&&(j1===jump_1)&&(x===xtra_data)&&(sf===stack_frame))
 		{
 			if(t_out!==0){clearTimeout(t_out);}
-			showResult(hr+"<h1><b><font color=%22386E38%22>Auto HEN installer initialized successfully.</font></b></h1><h3><b><font color=%22000000%22><span style='color:#000000;'>The HEN installation payload will launch automatically!</span></b></h3>");
+			showResult(hr+"<h1><b><font color=%22386E38%22>XierraCFW initialized!</font></b></h1><h3><b><font color=%22000000%22><span style='color:#00ff9d;'>You now can Install XierraCFW Packages.</span></b></h3>");
 			//enable_trigger();
 			setTimeout(function () {
 			  triggerX();
@@ -112,7 +112,7 @@ function initROP(init)
 	catch(e)
 	{
 		debug=true;
-		logAdd(br+"HEN Enabler initialization failed because the following exception was thrown during execution:"+br+e+" at : "+e.lineNumber);
+		logAdd(br+"An error occured:"+br+e+" at : "+e.lineNumber);
 		debug=false;
 	}
 }
@@ -120,25 +120,23 @@ function initROP(init)
 function triggerX()
 {
 		clearLogEntry();
-		showResult(hr+"<h2><b><span style='color:#000000;'>Installing HEN...</span></b></h2>");
+		showResult(hr+"<h2><b><span style='color:#00ff9d;'>Installing XierraCFW...</span></b></h2>");
 		disable_all();
 		setTimeout(trigger,1000,jump_1_addr);
-		setTimeout(rop_exit_hen,5000,hr+"<h1><b><font color=%22386E38%22>HEN is successfully installed</font></b></h1>","<h1><b><font color='red'>HEN Failure! Restart PS3 and retry!</font></b></h1>");
+		setTimeout(rop_exit_hen,5000,hr+"<h1><b><font color=%22386E38%22>XierraCFW is successfully installed</font></b></h1>","<h1><b><font color='red'>XierraCFW Failed to Patch, Please Restart PS3!</font></b></h1>");
 		cleanGUI();
 }
 </script>
 </head>
-	<body id="bodyId" style="background-color:#FFD097" onload="javascript:downloadhen()">
-	<div id="headerId" style="color:#CC2010">
-	<h1>PS3 HEN Auto Installer</h1>
-	<span style="color:#000000">Many thanks to xerpi for porting the memory leak exploit to ps3, zecoxao & Joonie for their early & renewed support, mysis for documenting vsh/lv2, SSL for his regular & precious advice, kakaroto for the PS3 IDA tools, naherwert for scetool, Rebug Team for producing/updating the only CFW adequate to develop this work & Cobra team for sharing their CobraUSB source, the psdevwiki team of course, STLcardsWS for his long standing contribution & ever constant support.<br>We also wish to thank all the ps3 community hackers/devs, past & present, who directly or indirectly helped us put this project together, you know who you are...</span><hr>
-	<h3>Supports CEX 4.80 - 4.82 / DEX 4.82 - 4.84 / CEX 4.83 - 4.91 HFW Firmware</h3>
-	<span style="color:#0055AA"><h3>INFO: If HEN is already installed, this will act as an Enabler</font></h3>
-	<span style="color:#222222"><h3>Instructions: Click the "Auto Install HEN" button. Wait.</font></h3>
-	<span style="color:#FF1122"><h3>* If initialization fails, set Home Page to about:blank and bookmark this page or return from history. Start browser again, load this page directly, and try again *</font></h3>
-	</div><hr>
-	<p><button id="btnROP" type="button" onclick="initROP(true);" autofocus>Auto Install HEN</button> | Auto-Close Browser <input type="checkbox" id="auto_close" name="aclose" checked="checked" onclick="autoclose();"/><span id="dex_txt" style="visibility:hidden"> | DEX mode<input type="checkbox" id="dex" name="DEX" disabled="" onclick="dex();"/> * If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!</span></p>
-	<p><button id="btnReset" type="button" onclick="disable_trigger();">Reset</button></span></p>
+	<body id="bodyId" style="background-color:#1e293b" onload="javascript:downloadhen()">
+	<div id="headerId" style="color:#FFFFFF">
+	<h1>XierraCFW Installer</h1>
+	<span style="color:#ffffff">Latest Version: 2.0<br><br>Rules and Notes to Install XierraCFW :<br>1.Install XierraCFW Only for HFW 4.90 - 4.91!<br>2.Clear WebCache if The Initialization was Failed.<br>3.Enable Auto-Close Browser before Installing!<br><br>How to Install XierraCFW :<br>1.Click on "Initialize XierraCFW" and wait until it says "XierraCFW Initialized"<br>2.Click on "Install XierraCFW"<br>3.Wait until the Package named "XierraCFW.pkg" installed and automatically reboots your PS3.<br>4.Go to "Enable HEN" and wait until it closed.<br>5.Go to Network > "Setup"<br>6.Install the package files and Reboot your PS3 After the PKG is Installed.<br><br><br></br><span><hr>
+	<h3>Only Support 4.90 - 4.91 HFW | XierraCFW-Based Latest PS3HEN</h3>
+	<span style="color:#0055AA"><h3>NOTE: If XierraCFW is already Installed, this will act as an Enabler.</font></h3><br>
+	<hr></div>
+	<p><button id="btnROP" type="button" onclick="initROP(true);" autofocus>Initialize XierraCFW</button> | Auto-Close Browser <input type="checkbox" id="auto_close" name="aclose" checked="checked" onclick="autoclose();"/><span id="dex_txt" style="visibility:hidden"> | DEX mode<input type="checkbox" id="dex" name="DEX" disabled="" onclick="dex();"/> * If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!</span></p>
+	<p><button id="btnTrigger" disabled="" type="button" onclick="triggerX();">Install XierraCFW</button><span id="reset" style="visibility:hidden"> | <button id="btnReset" type="button" onclick="disable_trigger();">Reset</button></span></p>
 	<div id="result" style="color:#CC2010"></div><br>
 	<div id="log"></div>
 	<div id="exploit" ></div>

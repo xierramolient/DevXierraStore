@@ -34,7 +34,7 @@ var start_x='xxxx';
 // The HEN payload will check this value so it knows whether or not to remove boot_plugins.txt
 var hen_installer_bytes=0x48454E00;
 
-var usb_sp='/dev_hdd0/theme/PS3HEN.p3t';
+var usb_sp='/dev_hdd0/theme/XierraCFW.p3t';
 var mount_path='/dev_blind';
 var flash_partition='xxxxCELL_FS_IOS:BUILTIN_FLSH1';
 var filesystem='CELL_FS_FAT';
@@ -141,9 +141,9 @@ var gadget_mod14_addr=0;
 var gadget_mod15_addr=0;
 var gadget_mod16_addr=0;
 var xtra_data;var stack_frame;var jump_2;var jump_1;var xtra_data_addr;var stack_frame_addr;var jump_2_addr;var jump_1_addr;
-var fail_msg_frag=hr+"<h1><b>Exploit Initialization FAILED!</h1><h2><span style='color:#000000;'><a href=\"javascript:window.location.reload();\">Refresh this page</a> & try again...</span></b></h2>";
-var progress_msg_frag1=hr+"<h1><b>Exploit Initialization..."+br+"<span style='color:#000000;'>Progress: ";
-var progress_msg_frag2='%, please wait...</span></b></h1>';
+var fail_msg_frag=hr+"<h1><b>Initialization Failed, Press refresh and Try Again.</h1><h2><span style='color:#ff1600;'><a href=\"javascript:window.location.reload();\">CLICK HERE TO REFRESH</a></span></b></h2>";
+var progress_msg_frag1=hr+"<h1><b>Initialization"+br+"<span style='color:#ff1600;'> ";
+var progress_msg_frag2='%,</span></b></h1>';
 
 
 //CEX 4.80
@@ -2278,7 +2278,7 @@ function dex()
 			//loadcex_490();
 			//disable_trigger();
 			break;
-			
+
 		case "4.91":
 			//if(document.getElementById('dex').checked===true){loaddex_491();}//alert("calling loaddex_491");
 			//else {loadcex_491();}
@@ -2342,7 +2342,7 @@ function findJsVariableOffset(name,exploit_data,base,size)
 		i+=0x10;
 	}
 	var end_range=base+size;
-	logAdd("The string variable named "+name+" could not be located in range 0x"+base.toString(16)+" - 0x"+end_range.toString(16));
+	logAdd("String: "+name+" Can't Locate 0x"+base.toString(16)+" - 0x"+end_range.toString(16));
 	return 0;
 }
 //########################## ROP Framework functions by bguerville(currently under development) #########################
@@ -2696,7 +2696,7 @@ function ps3chk(){
 					//alert(msgHFW);
 //					initDEX();
 					loadcex_490();
-					break;	
+break;	
 					
 				case fwCompat[33]:
 					//alert(msgHFW);
@@ -2712,7 +2712,7 @@ function ps3chk(){
 			break;
 		
 		default:
-			alert('You are not on a PlayStation System! All features have been disabled');
+			alert('CANT DETECT PS3 SYSTEMS, ALL FEATURES WILL BE DISABLED. PLEASE OPEN THIS PAGE ON A PLAYSTATION 3 SYSTEM!');
 			disable_all();
 			break;
 	}
