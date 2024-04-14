@@ -53,7 +53,3 @@ Answer: No, XierraCFW is ONLY for Hybrid FIRMWARE.
 
 ## (i) Thanks to
 ### + PS3Xploit
-### + PSX-PLACE
-### + LuanTeles
-### + Aldostools
-### + NeoCore TMS
